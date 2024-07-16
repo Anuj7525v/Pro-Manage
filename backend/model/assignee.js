@@ -1,14 +1,9 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const assigneeSchema = new mongoose.Schema({
+const assigneeSchema = new Schema({
   email: {
     type: String,
-    validate: {
-      validator: function (val) {
-        return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(val);
-      },
-      message: (props) => `${props.value} is not a valid email!`,
-    },
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -17,6 +12,5 @@ const assigneeSchema = new mongoose.Schema({
   },
 });
 
-const Assignee = mongoose.model('Assignee', assigneeSchema);
+module.exports = mongoose.model('Assignee', assigneeSchema);
 
-module.exports = Assignee;

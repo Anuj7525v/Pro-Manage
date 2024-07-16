@@ -1,22 +1,24 @@
 const express = require('express');
-const verifyAuth = required('../middleware/IdentifyAuth.js');
+const verifyAuth = require('../middleware/IdentifyAuth');
 const {
   getAssignees,
   createAssignee,
   getAssignee,
   updateAssignee,
   deleteAssignee,
-} = require('../controllers/assigneeController');
+} = require('../controllers/assignee');
 
 const router = express.Router();
 router.use(verifyAuth);
 
-router.get('/', getAssignees);
-router.post('/', validateEmail, createAssignee); 
-router.get('/:assigneeId', getAssignee);
-router.patch('/:assigneeId', updateAssignee);
-router.delete('/:assigneeId', deleteAssignee);
+router.get('/allassignee', getAssignees);
+router.post('/createassignee', createAssignee); 
+router.get('/viewassignee/:assigneeId', getAssignee);
+router.patch('/udpdateassignee/:assigneeId', updateAssignee);
+router.delete('/deleteassignee/:assigneeId', deleteAssignee);
 
+
+/*
 function validateEmail(req, res, next) {
   const { email } = req.body;
   if (!isValidEmail(email)) {
@@ -30,5 +32,7 @@ function validateEmail(req, res, next) {
 
 function isValidEmail(email) {
   return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
-}
+}  */
+
+
 module.exports = router;

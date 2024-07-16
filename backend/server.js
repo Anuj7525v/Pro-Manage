@@ -5,9 +5,10 @@ const bodyParser = require("body-parser");
 //const fs = require("fs");
 const app = express();
 const cors  = require("cors");
-//const authRouter = require("./routers/auth");
-//const todoRouter = require("./routers/todo");
-//const userRouter = require("./routers/user");
+const authRouter = require("./routes/auth");
+const taskRouter = require("./routes/task");
+const userRouter = require("./routers/user");
+const assigneeRouter = require("./routes/assignee");
 
 const env = require("dotenv");
 env.config();
@@ -32,9 +33,10 @@ app.use((req, res, next) => {
 */
 
 
-//app.use("/api/auth", authRouter);
-//app.use("/api/todo",todoRouter);
-//app.use("/api/user",userRouter)
+app.use("/api/auth", authRouter);
+app.use("/api/task",taskRouter);
+app.use("/api/user",userRouter);
+app.use("/api/assignee",assigneeRouter);
 
 
 /*
@@ -65,7 +67,7 @@ app.use((err, req, res, next) => {
     app.listen(process.env.port, () => {
         mongoose.connect(process.env.MongoDB)
             .then(() => {
-                console.log("Server is running with DB ");
+                console.log(`Server is running with DB on ${process.env.port}` );
             }).catch((error) => {
                 console.log(error);
             })

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
-const { userSchema } = require('./userModel');
+//const { userSchema } = require('./user');
+const Schema = mongoose.Schema;
 
-const checkListSchema = new mongoose.Schema({
+const checkListSchema = new Schema({
   checked: {
     type: Boolean,
     default: false,
@@ -12,7 +13,7 @@ const checkListSchema = new mongoose.Schema({
   },
 });
 
-const taskSchema = new mongoose.Schema(
+const taskSchema = new Schema(
   {
     title: {
       type: String,
@@ -38,12 +39,6 @@ const taskSchema = new mongoose.Schema(
     checklists: {
       type: [checkListSchema],
       required: true,
-      validate: {
-        validator: function (val) {
-          return val.length > 0;
-        },
-        message: 'Please add at least one checklist',
-      },
     },
     status: {
       type: String,
@@ -69,6 +64,7 @@ const taskSchema = new mongoose.Schema(
   }
 );
 
+/*
 taskSchema.virtual('isExpired').get(function () {
   if (!this.dueDate) {
     return false;
@@ -95,7 +91,9 @@ taskSchema.pre('save', async function (next) {
     }
   }
   next();
-});
+}); 
 
 const Task = mongoose.model('Task', taskSchema);
-module.exports = Task;
+module.exports = Task; */
+
+module.exports = mongoose.model('Task',taskSchema);
