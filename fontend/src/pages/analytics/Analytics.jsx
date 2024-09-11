@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Analytics.css';
 import Sidebar from '../../components/slidebar/slidebar';
 import axios from 'axios'; // Import axios for API requests
+import { BACKEND_URL } from '../../constant';
 
 const Analytics = () => {
   const [taskData, setTaskData] = useState([]);
@@ -10,7 +11,7 @@ const Analytics = () => {
     const fetchTaskData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:5000/api/tasks`, {
+        const response = await axios.get(`${BACKEND_URL}/api/tasks`, {
             method: 'get',
             headers: {
               'Content-Type': 'application/json',

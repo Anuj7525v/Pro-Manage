@@ -9,6 +9,8 @@ import { Toaster, toast } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
 import assign from "../../assets/Group 3779addcolab.png";
 import AddUser from '../adduser/adduser'; // Assuming correct path for AddUser component
+import { BACKEND_URL } from '../../constant';
+
 
 
 
@@ -60,8 +62,9 @@ const Board = () => {
   const handleSaveTask = async (taskData) => {
     try {
       const url = taskData._id 
-        ? `http://localhost:5000/api/tasks/${taskData._id}` 
-        : 'http://localhost:5000/api/tasks';
+        ? `${BACKEND_URL}/api/tasks/${taskData._id}` 
+        : `${BACKEND_URL}/api/tasks`;
+        console.log("Task ID :",taskData.id);
       const method = taskData._id ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -73,7 +76,9 @@ const Board = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to save task');
+        const errorData = await response.json();
+        console.error('Error details:', errorData);
+        throw new Error(`Failed to save task: ${errorData.message}`);
       }
 
       const savedTask = await response.json();
@@ -101,7 +106,7 @@ const Board = () => {
   const handleAssign = async (email) => {
     try {
       // Call backend API to check if user with `email` exists
-      const response = await fetch(`http://localhost:5000/api/users/${email}`, {
+      const response = await fetch(`${BACKEND_URL}/api/users/${email}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -136,7 +141,7 @@ const Board = () => {
 
   const handleDelete = async (id) => {
     try {
-      const url = `http://localhost:5000/api/tasks/${id}`;
+      const url = `${BACKEND_URL}/api/tasks/${id}`;
       const response = await fetch(url, {
         method: 'DELETE',
         headers: {

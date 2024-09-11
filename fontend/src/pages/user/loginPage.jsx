@@ -10,6 +10,7 @@ import eyeIcon from '../../assets/eye.png';
 import lockIcon from '../../assets/lock.png';
 import emailIcon from  '../../assets/lock.png';
 import hideye from  '../../assets/clarity_eye-hide-lineunhide.png'; 
+import { BACKEND_URL } from '../../constant';
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
@@ -36,7 +37,7 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/login', formData, {
+            const response = await axios.post(`${BACKEND_URL}/api/auth/login`, formData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

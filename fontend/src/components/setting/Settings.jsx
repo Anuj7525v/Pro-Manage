@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { toast } from 'react-hot-toast'; // Import toast from react-hot-toast
+import { BACKEND_URL } from '../../constant';
 
 const Settings = () => {
     const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
@@ -26,7 +27,7 @@ const Settings = () => {
             }
 
             const response = await axios.put(
-                'http://localhost:5000/api/auth/updatepassword',
+                `${BACKEND_URL}/api/auth/updatepassword`,
                 { oldPassword, newPassword },
                 {
                     headers: {

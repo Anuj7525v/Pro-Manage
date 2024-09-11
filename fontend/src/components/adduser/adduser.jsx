@@ -10,7 +10,7 @@ const AddUser = () => {
   
     const handleAddUser = async () => {
       try {
-        const response = await axios.post('https://final-evolution-project-cuvette.onrender.com/api/auth/check-user', { email });
+        const response = await axios.post('https://pro-manage-5k08.onrender.com/api/auth/check-user', { email });
         if (response.data.exists) {
           toast.success(`${email} added to board`);
           setUserFound(true); // Set state to indicate user is found

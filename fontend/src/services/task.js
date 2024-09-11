@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { BACKEND_URL } from '../constant';
+
 export const getAllTasks = async (timeframe) => {
     console.log(localStorage.getItem('token'))
 
@@ -15,7 +17,7 @@ export const getAllTasks = async (timeframe) => {
     const headers = {
       Authorization: token,
     };
-    const response = await axios.get(`http://localhost:5000/api/tasks?filter=${timeframe}`,{headers});
+    const response = await axios.get(`${BACKEND_URL}/api/tasks?filter=${timeframe}`,{headers});
     return response; // Return only data from the response
   } catch (error) {
    

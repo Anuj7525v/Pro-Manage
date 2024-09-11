@@ -1,12 +1,13 @@
 import React from 'react';
 import TodoCard from './todocard/TodoCard';
+import {BACKEND_URL} from "../constant";
 
 export default function Tasks({ id, task, sendDataToParent, onEdit, collapsedAll, toggleCollapse }) {
 
   const onDelete = async (taskId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
+      const response = await fetch(`${BACKEND_URL}/api/tasks/${taskId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -28,7 +29,7 @@ export default function Tasks({ id, task, sendDataToParent, onEdit, collapsedAll
   const onMove = async (taskId, status) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/tasks/movetask', {
+      const response = await fetch(`${BACKEND_URL}/api/tasks/movetask`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

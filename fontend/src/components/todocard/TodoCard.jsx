@@ -4,6 +4,7 @@ import './TodoCard.css';
 import axios from 'axios';
 import { Toaster, toast } from 'react-hot-toast';
 import PopupComponent from '../popup/popup'; // Adjust path as per your file structure
+import {BACKEND_URL} from "../../constant";
 
 import menuIcon from "../../assets/Group 544menu.png";
 
@@ -44,7 +45,7 @@ const TodoCard = ({ task, onEdit, onDelete, onMove, onUpdateCheckedCount, collap
       const taskId = task._id; // Assuming taskId is available in props or context
 
       const response = await axios.put(
-        `http://localhost:5000/api/tasks/${taskId}/checklist/${index}`,
+        `${BACKEND_URL}/api/tasks/${taskId}/checklist/${index}`,
         { checked: updatedList[index].checked },
         {
           headers: {

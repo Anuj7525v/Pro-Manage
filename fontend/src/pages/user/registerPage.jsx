@@ -10,6 +10,7 @@ import userIcon from '../../assets/user.png';
 import lockIcon from '../../assets/lock.png';
 import emailIcon from  '../../assets/lock.png';
 import hideye from  '../../assets/clarity_eye-hide-lineunhide.png'; 
+import {BACKEND_URL} from  "../../constant";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -45,7 +46,7 @@ const Register = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/register', { name, email, password }, {
+            const response = await axios.post(`${BACKEND_URL}/api/auth/register`, { name, email, password }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

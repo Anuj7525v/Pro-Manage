@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './share.css'; // Import your custom CSS file
 import logo from  '../../assets/codesandboxpromanagelogo.png';
+import { BACKEND_URL } from '../../constant';
 
 const Sharepage = () => {
   const { id } = useParams(); // Get the taskId from URL parameters
@@ -10,7 +11,7 @@ const Sharepage = () => {
   useEffect(() => {
     const fetchTaskData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/share/${id}`);
+        const response = await fetch(`${BACKEND_URL}/api/share/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch task data');
         }
