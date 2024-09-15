@@ -15,9 +15,10 @@ export const getAllTasks = async (timeframe) => {
 
   try {
     const headers = {
-      Authorization: token,
+      Authorization: `${token}`,
     };
     const response = await axios.get(`${BACKEND_URL}/api/tasks?filter=${timeframe}`,{headers});
+    console.log(response.data)
     return response; // Return only data from the response
   } catch (error) {
    

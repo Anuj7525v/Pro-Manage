@@ -61,10 +61,10 @@ const Board = () => {
 
   const handleSaveTask = async (taskData) => {
     try {
-      const url = taskData._id 
-        ? `${BACKEND_URL}/api/tasks/${taskData._id}` 
+      const url = taskData._id
+        ? `${BACKEND_URL}/api/tasks/${taskData._id}`
         : `${BACKEND_URL}/api/tasks`;
-        console.log("Task ID :",taskData.id);
+      console.log("Task ID :", taskData.id);
       const method = taskData._id ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -85,9 +85,9 @@ const Board = () => {
       notify(taskData._id ? "Task Updated" : "Task Created");
 
       setTasks(prevTasks => {
-        const updatedTasks = {...prevTasks};
+        const updatedTasks = { ...prevTasks };
         if (taskData._id) {
-          updatedTasks.data = updatedTasks.data.map(task => 
+          updatedTasks.data = updatedTasks.data.map(task =>
             task._id === savedTask._id ? savedTask : task
           );
         } else {
@@ -148,13 +148,13 @@ const Board = () => {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to delete task');
       }
-  
+
       notify('Task deleted');
-  
+
       setTasks(prevTasks => {
         const updatedTasks = { ...prevTasks };
         updatedTasks.data = updatedTasks.data.filter(task => task._id !== id);
@@ -168,15 +168,15 @@ const Board = () => {
   return (
     <div className="board-container">
       <Toaster />
-      
+
       <div className="select-container">
         <l className="board-text"><p1>Board <img src={assign} alt="" onClick={openAssignPopup} /></p1>
-        <p className='filterbtn'>  <select id="timeframe" name="timeframe" onChange={handleTimeframeChange}>
-        <option value="thisWeek">This Week</option>
-          <option value="today">Today</option>
-          <option value="thisMonth">This Month</option>
-        </select></p></l>
-      
+          <p className='filterbtn'>  <select id="timeframe" name="timeframe" onChange={handleTimeframeChange}>
+            <option value="thisWeek">This Week</option>
+            <option value="today">Today</option>
+            <option value="thisMonth">This Month</option>
+          </select></p></l>
+
       </div>
 
       <div className="board">
@@ -191,16 +191,38 @@ const Board = () => {
                   </span>
                 )}
                 <span className="collapse-icon" onClick={toggleCollapse}>
-                  <img 
-                    src={colaps} 
+                  <img
+                    src={colaps}
                   />
                 </span>
               </div>
             </div>
-            
+
             {!collapsedColumns[column.toLowerCase()] && (
               <div className="cards">
-                {tasks.length === 0 ? (
+
+                {tasks && tasks.data && tasks.data.length > 0 ? (
+                  tasks.data.map((task) => (
+                    task.status === column &&
+                    <Tasks
+                      key={task._id}
+                      id={task._id}
+                      task={task}
+                      sendDataToParent={handleDataFromChild}
+                      onEdit={() => {
+                        setShowTaskForm(true);
+                        setCurrentTask(task);
+                      }}
+                      collapsedAll={collapsedAll} toggleCollapse={toggleCollapse}
+                      onDelete={() => handleDelete(task._id)}
+                    />
+                  ))
+                ) : (
+                  <p>No tasks found</p>
+                )}
+
+
+                {/*         {tasks.length === 0 ? (
                   <p>No tasks found</p>
                 ) : (
                   tasks.data.map((task) => (
@@ -218,7 +240,7 @@ const Board = () => {
                       onDelete={() => handleDelete(task._id)}
                     />
                   ))
-                )}
+                )}  */}
               </div>
             )}
           </div>
@@ -228,13 +250,13 @@ const Board = () => {
       {showTaskForm && (
         <div className="task-form-overlay">
           <div className="task-form-container">
-            <TaskForm 
-              task={currentTask} 
-              onSave={handleSaveTask} 
+            <TaskForm
+              task={currentTask}
+              onSave={handleSaveTask}
               onCancel={() => {
                 setShowTaskForm(false);
                 setCurrentTask(null);
-              }} 
+              }}
             />
           </div>
         </div>

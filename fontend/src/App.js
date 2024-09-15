@@ -7,7 +7,7 @@ import Dashboard from './pages/dashboard/dashboard';
 import Analytics from './pages/analytics/Analytics';
 import Settings from './components/setting/Settings';
 import Sharepage from './pages/share/Sharepage';
-import ProtectedRoute from './components/ProtectedRoute';
+//import ProtectedRoute from './components/ProtectedRoute';
 function App() {
     return (
         
@@ -24,27 +24,27 @@ function App() {
                
                     path="/dashboard" 
                     element={
-                        <ProtectedRoute >
+                     
                             <Dashboard />
-                            </ProtectedRoute>
+                           
                        
                     } 
                 />
                 <Route 
                     path="/analytics" 
                     element={
-                        <ProtectedRoute >
+                 
                             <Analytics />
-                            </ProtectedRoute>
+                           
                       
                     } 
                 />
                 <Route 
                     path="/setting" 
                     element={
-                        <ProtectedRoute >
+                   
                             <Settings />
-                            </ProtectedRoute>
+                            
                       
                     } 
                 />
