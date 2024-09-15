@@ -30,7 +30,7 @@ const createTask = async (req, res, next) => {
     }
 };
 
-const getTasksForUser = async (req, res) => {
+const getTasksForUser = async (req, res,next) => {
    
     try {
         const { filter } = req.query;
@@ -65,11 +65,11 @@ const getTasksForUser = async (req, res) => {
         res.status(200).json(tasks);
     } catch (err) {
         console.error('Error fetching tasks:', err);
-        res.status(500).json({ message: 'Server error while fetching tasks' });
+       next(err);
     }
 };
 
-const updateChecklistItem = async (req, res) => {
+const updateChecklistItem = async (req, res,next) => {
     const { taskId, index } = req.params;
     const { checked } = req.body;
 
@@ -93,11 +93,11 @@ const updateChecklistItem = async (req, res) => {
         res.json(task);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server error');
+       next(err);
     }
 };
 
-const updateTask = async (req, res) => {
+const updateTask = async (req, res,next) => {
     const { title, priority, dueDate, checklist } = req.body;
 
     try {
@@ -118,11 +118,11 @@ const updateTask = async (req, res) => {
         res.json(task);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server error');
+       next(err);
     }
 };
 
-const moveTask = async (req,res) =>{
+const moveTask = async (req,res,next) =>{
     const {taskId,status} = req.body;
     console.log("hi")
     try {
@@ -143,12 +143,12 @@ const moveTask = async (req,res) =>{
         res.json(task);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server error');
+       next(err);
     }
 
 }
 
-const deleteTask = async (req, res) => {
+const deleteTask = async (req, res,next) => {
     try {
         const task = await Task.findById(req.params.id);
 
@@ -163,11 +163,11 @@ const deleteTask = async (req, res) => {
         res.json({ msg: 'Task removed' });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server error');
+        next(err);
     }
 };
 
-const shareTask = async (req, res) => {
+const shareTask = async (req, res,next) => {
     const taskId = req.params.id;
 
     try {
@@ -192,7 +192,7 @@ const shareTask = async (req, res) => {
         res.status(200).json({ message: 'Task shared successfully', taskDetails });
     } catch (error) {
         console.error('Error sharing task:', error);
-        res.status(500).json({ error: 'Internal server error' });
+       next(error);
     }
 };
 

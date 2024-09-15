@@ -30,7 +30,7 @@ const registerUser = async (req, res) => {
 
 
 
-const allUsers = async (req, res) => {
+const allUsers = async (req, res,next) => {
     try {
         const { email, password } = req.body
         if (!email || !password) {
@@ -44,15 +44,14 @@ const allUsers = async (req, res) => {
 
         const users = await User.find()
         res.status(200).json(users)
-    } catch (err) {
-        console.error(err.message)
-        res.status(500).send('Server error')
+    } catch (error) {
+       next(error);
     }
 }
 
 
 
-const loginUser = async (req, res) => {
+const loginUser = async (req, res,next) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -80,13 +79,12 @@ const loginUser = async (req, res) => {
             name: checkUser.name,
             email: checkUser.email,
         });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ message: 'Server error', error: err.message });
+    } catch (error) {
+        next(error)
     }
 };
 
-const updatePassword = async (req, res) => {
+const updatePassword = async (req, res,next) => {
     try {
         const { oldPassword, newPassword } = req.body;
 
@@ -113,12 +111,11 @@ const updatePassword = async (req, res) => {
         await checkUser.save();
 
         res.status(200).json({ message: 'Password updated successfully' });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ message: 'Server error', error: err.message });
+    } catch (error) {
+        next(error)
     }
 };
-const checkUserByEmail = async (req, res) => {
+const checkUserByEmail = async (req, res,next) => {
     const { email } = req.body;
 
     try {
@@ -131,9 +128,8 @@ const checkUserByEmail = async (req, res) => {
             // User does not exist
             return res.status(404).json({ exists: false, message: 'User not found in the database.' });
         }
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Internal server error' });
+    } catch (error) {
+        next(error)
     }
 };
 

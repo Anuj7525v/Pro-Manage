@@ -11,6 +11,11 @@ const {
     updateChecklistItem
 } = require('../controllers/task');
 
+
+router.get('/', (req, res) => {
+  res.status(200).json({ message: 'Dummy route is working!' });
+});
+
 router.post('/tasks', auth, createTask);
 router.post('/tasks/movetask',auth,moveTask);
 router.get('/tasks', auth, getTasksForUser);
@@ -20,8 +25,5 @@ router.put('/update/:id', auth, updateTask);
 router.delete('/tasks/:id', auth, deleteTask);
 router.get('/share/:id', shareTask); 
 
-router.get('/', (req, res) => {
-    res.status(200).json({ message: 'Dummy route is working!' });
-  });
 
 module.exports = router;

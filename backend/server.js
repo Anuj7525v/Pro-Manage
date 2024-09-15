@@ -50,6 +50,7 @@ app.use((err, req, res, next) => {
     const time = `${now.toLocaleTimeString()}`;
     const error = `${req.method} ${req.originalUrl} ${time}`;
     errorStream.write(error + err.stack + '\n');
+    console.log(err.stack);
     res.status(500).send("Internal Sever Error");
 });
 
